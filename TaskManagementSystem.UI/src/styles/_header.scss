@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'jaapokkienhance-regular';
+    src: local('@'), url(../assets/fonts/web/jaapokkienchance-regular.woff) format('woff'),
+                     url(../assets/fonts/web/jaapokkienchance-regular.ttf) format('truetype'),
+                     url(../assets/fonts/web/jaapokkienchance-regular.svg) format('svg'),
+                     url(../assets/fonts/web/jaapokkienchance-regular.eot) format('eot');
+}
+
+.header-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;  
+  background: url('../assets/images/headerBackground.png') repeat-x 0 80%;
+}
+
+.header-text {
+  font-family: 'jaapokkienhance-regular' !important;
+  text-align: center;
+  font-size: 42px !important; 
+  color: #e6e5e8;
+  text-transform: uppercase;
+
+  @media (max-width: 600px) {
+    font-size: 18px; 
+  }
+}

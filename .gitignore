@@ -1,0 +1,32 @@
+########################################
+# Global IDE & OS Files
+########################################
+.vs/
+.vscode/
+
+########################################
+# Node / React / Vite (Frontend)
+########################################
+TaskManagementSystem.UI/node_modules/
+TaskManagementSystem.UI/dist/
+TaskManagementSystem.UI/build/
+TaskManagementSystem.UI/.vite/
+
+########################################
+# .NET / C# (Backend)
+########################################
+# Path: TaskManagementSystem.API
+TaskManagementSystem.API/[Bb]in/
+TaskManagementSystem.API/[Oo]bj/
+TaskManagementSystem.API/*.user
+TaskManagementSystem.API/*.suo
+TaskManagementSystem.API/*.userosscache
+TaskManagementSystem.API/*.sln.docstates
+TaskManagementSystem.API/*.pdb
+TaskManagementSystem.API/*.cache
+TaskManagementSystem.API/*.log
+TaskManagementSystem.API/TestResult*/
+TaskManagementSystem.API/*.TestResults.xml
+TaskManagementSystem.API/Properties/PublishProfiles/
+TaskManagementSystem.API/appsettings.Development.json
+TaskManagementSystem.API/coverage/

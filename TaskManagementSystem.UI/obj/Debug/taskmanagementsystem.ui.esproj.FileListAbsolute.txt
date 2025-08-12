@@ -1,0 +1,1 @@
+C:\Users\lumin\source\repos\TaskManagementSystem.API\TaskManagementSystem.UI\obj\Debug\taskmanagementsystem.ui.esproj.CoreCompileInputs.cache
