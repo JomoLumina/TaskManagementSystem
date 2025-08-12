@@ -24,9 +24,8 @@ It supports creating, updating, and moving tasks between different stages of com
 
 **Backend:**  
 - .NET 8 Web API
-- C#
+- C# with InMemory Database
 - Entity Framework Core
-- SQL Server
 
 ---
 
@@ -38,7 +37,6 @@ Follow these steps to set up and run the project locally.
 Make sure you have the following installed:
 - [Node.js](https://nodejs.org/) (LTS recommended)
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) or [SQL Server LocalDB](https://learn.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb)
 
 ---
 
