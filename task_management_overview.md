@@ -94,14 +94,14 @@ It allows administrators to manage tasks, set priorities, and assign them to tea
 
 ### **Frontend**
 \`\`\`bash
-cd frontend
+cd TaskManagementSystem.UI
 npm install
 npm run dev
 \`\`\`
 
 ### **Backend**
 \`\`\`bash
-cd backend
+cd TaskManagementSystem.API
 dotnet restore
 dotnet run
 \`\`\`
