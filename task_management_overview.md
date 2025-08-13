@@ -82,7 +82,7 @@ It allows administrators to manage tasks, set priorities, and assign them to tea
   "title": "Update Documentation",
   "description": "Prepare the project documentation for handover.",
   "priority": 2,
-  "status": "Pending",
+  "status": 1,
   "assigneeId": "user-123",
   "creatorId": "admin-001"
 }
@@ -118,13 +118,12 @@ dotnet run
 
 ## 9. Future Enhancements
 - Integration with external services (e.g., email notifications).
-- Drag-and-drop task management.
 - Real-time updates via WebSockets.
 - Audit logs for task changes.
 
 ---
 
 ## 10. Contributors
-- **Frontend Developer:** [Name]
-- **Backend Developer:** [Name]
-- **UI/UX Designer:** [Name]
+- **Frontend Developer:** Jomo Lumina
+- **Backend Developer:** Jomo Lumina
+- **UI/UX Designer:** Jomo Lumina
