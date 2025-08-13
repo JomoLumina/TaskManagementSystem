@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import {
   Box,
   Table,
@@ -31,6 +30,7 @@ const TaskRecords: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskId, setTaskId] = useState<string | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [viewModalOpen, setViewModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
@@ -38,41 +38,31 @@ const TaskRecords: React.FC = () => {
   const [creator, setCreator] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchTasks = async () => {
+    const fetchTasksAndUsers = async () => {
       try {
         setLoading(true);
-        const response = await apiClient.get("/tasks");
-        setTasks(response.data);
+        const resTasks = await apiClient.get("/tasks");
+        const resUsers = await apiClient.get("/users");
+        setTasks(resTasks.data);
+        setUsers(resUsers.data);
       } catch (error) {
-        console.error("Failed to fetch tasks", error);
+        console.error("Failed to fetch tasks and users", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTasks();
+    fetchTasksAndUsers();
   }, []);
 
-  const handleViewModalOpen = async (task: Task) => {
-    try {
-      setLoading(true);
-      const response = await apiClient.get("/users");
-      if (response.status === 200) {
-        const user = response.data.find((u: User) => u.id === task.assigneeId);
-        setAssignedTo(user ? user.username : "Unassigned");
-        const creatorUser = response.data.find(
-          (u: User) => u.id === task.creatorId
-        );
-        setCreator(creatorUser ? creatorUser.username : "Unknown");
-      }
+  const handleViewModalOpen = (task: Task) => {
+    const _assignedTo = users.find((u: User) => u.id === task.assigneeId);
+    const _creator = users.find((u: User) => u.id === task.creatorId);
 
-      setSelectedTask(task);
-      setViewModalOpen(true);
-    } catch (error) {
-      console.error("Failed to fetch assignee and", error);
-    } finally {
-      setLoading(false);
-    }
+    setAssignedTo(_assignedTo ? _assignedTo.username : "Unassigned");
+    setCreator(_creator ? _creator.username : "Unknown");
+    setSelectedTask(task);
+    setViewModalOpen(true);
   };
 
   const handleViewModalClose = () => {
@@ -146,18 +136,12 @@ const TaskRecords: React.FC = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                <strong>Title</strong>
-              </TableCell>
-              <TableCell>
-                <strong>Priority</strong>
-              </TableCell>
-              <TableCell>
-                <strong>Status</strong>
-              </TableCell>
-              <TableCell align="center">
-                <strong>Actions</strong>
-              </TableCell>
+              <TableCell><strong>Title</strong></TableCell>
+              <TableCell><strong>Priority</strong></TableCell>
+              <TableCell><strong>Status</strong></TableCell>
+              <TableCell><strong>Assigned to</strong></TableCell>
+              <TableCell><strong>Created by</strong></TableCell>
+              <TableCell align="center"><strong>Actions</strong></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -169,6 +153,15 @@ const TaskRecords: React.FC = () => {
                     {formatLabel(TaskPriority[task.priority])}
                   </TableCell>
                   <TableCell>{formatLabel(TaskStatus[task.status])}</TableCell>
+                  <TableCell>
+                    {
+                      users.find((u: User) => u.id === task.assigneeId)
+                        ?.username
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {users.find((u: User) => u.id === task.creatorId)?.username}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton
                       color="primary"

@@ -34,7 +34,45 @@ const TaskBoard: React.FC = () => {
   });
   const [loading, setLoading] = useState(false);
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
 
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setUpdateModalOpen(true);
+  };
+
+  const handleTaskUpdate = async (updatedTask: Task) => {
+    try {
+      await apiClient.put(`/tasks/${updatedTask.id}`, updatedTask);
+
+      setTasks((prev) => ({
+        ...prev,
+        [updatedTask.id]: updatedTask,
+      }));
+
+      const oldStatusColId =
+        updatedTask.status === TaskStatus.TODO
+          ? "todo"
+          : updatedTask.status === TaskStatus.IN_PROGRESS
+          ? "inprogress"
+          : "done";
+
+      const newColumnsState = { ...columns };
+      Object.keys(newColumnsState).forEach((colId) => {
+        newColumnsState[colId].taskIds = newColumnsState[colId].taskIds.filter(
+          (id) => id !== updatedTask.id
+        );
+      });
+      newColumnsState[oldStatusColId].taskIds.unshift(updatedTask.id);
+
+      setColumns(newColumnsState);
+      setUpdateModalOpen(false);
+      setSelectedTask(null);
+    } catch (error) {
+      console.error("Failed to update task", error);
+    }
+  };
   // Fetch tasks for current user
   useEffect(() => {
     if (!userId) return;
@@ -191,30 +229,38 @@ const TaskBoard: React.FC = () => {
                       }}
                     >
                       {columnTasks.map((task, index) => (
-                        <Draggable
+                        <Box
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleTaskClick(task); 
+                          }}
                           key={task.id}
-                          draggableId={task.id}
-                          index={index}
                         >
-                          {(provided, snapshot) => (
-                            <Paper
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              sx={{
-                                padding: 1,
-                                marginBottom: 1,
-                                backgroundColor: snapshot.isDragging
-                                  ? "#bbdefb"
-                                  : "white",
-                                cursor: "grab",
-                              }}
-                              elevation={1}
-                            >
-                              <Typography noWrap>{task.title}</Typography>
-                            </Paper>
-                          )}
-                        </Draggable>
+                          <Draggable
+                            key={task.id}
+                            draggableId={task.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <Paper
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                sx={{
+                                  padding: 1,
+                                  marginBottom: 1,
+                                  backgroundColor: snapshot.isDragging
+                                    ? "#bbdefb"
+                                    : "white",
+                                  cursor: "grab",
+                                }}
+                                elevation={1}
+                              >
+                                <Typography noWrap>{task.title}</Typography>
+                              </Paper>
+                            )}
+                          </Draggable>
+                        </Box>
                       ))}
                       {provided.placeholder}
                     </Box>
@@ -236,6 +282,15 @@ const TaskBoard: React.FC = () => {
             todo: { ...prev.todo, taskIds: [task.id, ...prev.todo.taskIds] },
           }));
         }}
+      />
+      <UpdateTaskModal
+        open={updateModalOpen}
+        task={selectedTask}
+        onClose={() => {
+          setUpdateModalOpen(false);
+          setSelectedTask(null);
+        }}
+        onUpdate={handleTaskUpdate}
       />
     </>
   );
