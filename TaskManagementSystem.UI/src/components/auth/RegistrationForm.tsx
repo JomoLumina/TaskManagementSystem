@@ -143,7 +143,7 @@ const RegistrationForm: React.FC = () => {
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          color="secondary"
           fullWidth
           className="white-text-field"
           disabled={loading}
@@ -152,7 +152,7 @@ const RegistrationForm: React.FC = () => {
         </Button>
         <Divider className="divider" />
         <Typography textAlign="center">
-          <Link component={RouterLink} to="/login" underline="hover">
+          <Link component={RouterLink} to="/login" color="secondary" underline="hover">
             Login
           </Link>
         </Typography>

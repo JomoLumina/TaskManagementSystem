@@ -1,43 +1,65 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 import { User } from "../types/user";
-
+import { Role } from "../types/role";
 
 type AuthContextType = {
   token: string | null;
   user: User | null;
   isLoggedIn: boolean;
+  isAdmin: boolean;
+  authChecked: boolean;
   login: (token: string, user: User) => void;
   logout: () => void;
 };
+
+interface JwtPayload {
+  exp: number;
+}
 
 const AuthContext = createContext<AuthContextType>({
   token: null,
   user: null,
   isLoggedIn: false,
+  isAdmin: false,
+  authChecked: false,
   login: () => {},
   logout: () => {},
 });
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   const isLoggedIn = !!token;
+  const isAdmin = user?.role === Role.ADMIN;
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
 
-    if (storedToken) {
-      setToken(storedToken);
+    if (!storedToken) {
+      setAuthChecked(true);
+      return;
     }
 
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch {
-        localStorage.removeItem("user");
+    try {
+      const decoded = jwtDecode<JwtPayload>(storedToken);
+      const currentTime = Date.now() / 1000;
+
+      if (decoded.exp < currentTime) {
+        logout();
+      } else {
+        setToken(storedToken);
+        setUser(storedUser ? JSON.parse(storedUser) : null);
       }
+    } catch (err) {
+      logout();
+    } finally {
+      setAuthChecked(true);
     }
   }, []);
 
@@ -56,7 +78,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{ token, user, isLoggedIn, isAdmin, authChecked, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

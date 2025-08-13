@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Drawer,
   List,
-  ListItem,
   ListItemIcon,
   ListItemText,
   Divider,
@@ -11,6 +10,7 @@ import {
   Typography,
   ListItemButton,
 } from "@mui/material";
+import { useAuth } from "../../context/AuthContext";
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,7 +19,7 @@ import InsertFileIcon from "@mui/icons-material/InsertDriveFile";
 
 type SidebarProps = {
   onLogout: () => void;
-  onNavigate: (tab: "users" | "tasks" | "any-url") => void;
+  onNavigate: (tabs: string) => void;
   open?: boolean;
 };
 
@@ -30,6 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   onNavigate,
   open = true,
 }) => {
+  const { isAdmin } = useAuth();
   const [isOpen, setIsOpen] = useState(open);
 
   const handleDrawerToggle = () => {
@@ -76,24 +77,30 @@ const Sidebar: React.FC<SidebarProps> = ({
           <Box display="flex" flexDirection="column" height="100%">
             <Box p={2}>
               <Typography variant="h6" align="center">
-                Menu
+                {isAdmin ? 'Admin Menu' : 'User Menu'}
               </Typography>
             </Box>
             <Divider className="divider" />
 
             <List>
-              <ListItemButton onClick={() => onNavigate("tasks")}>
+              <ListItemButton onClick={() => onNavigate("")}>
                 <ListItemIcon>
                   <AssignmentIcon htmlColor="white" />
                 </ListItemIcon>
-                <ListItemText primary="Tasks" />
+                <ListItemText primary="My Tasks" />
               </ListItemButton>
-              <ListItemButton onClick={() => onNavigate("users")}>
+               {isAdmin && <ListItemButton onClick={() => onNavigate("tasks")}>
+                <ListItemIcon>
+                  <AssignmentIcon htmlColor="white" />
+                </ListItemIcon>
+                <ListItemText primary="Task Records" />
+              </ListItemButton>}
+              {isAdmin && (<ListItemButton onClick={() => onNavigate("users")}>
                 <ListItemIcon>
                   <PeopleIcon htmlColor="white" />
                 </ListItemIcon>
-                <ListItemText primary="Users" />
-              </ListItemButton>
+                <ListItemText primary="User Records" />
+              </ListItemButton>)}
               <ListItemButton onClick={() => onNavigate("any-url")}>
                 <ListItemIcon>
                   <InsertFileIcon htmlColor="white" />

@@ -10,8 +10,8 @@ namespace TaskManagementSystem.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _users;
-        private readonly ILogger _logger;
-        public UsersController(IUserService users, ILogger logger)
+        private readonly ILogger<UsersController> _logger;
+        public UsersController(IUserService users, ILogger<UsersController> logger)
         {
             _users = users;
             _logger = logger;

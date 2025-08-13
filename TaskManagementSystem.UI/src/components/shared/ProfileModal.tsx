@@ -20,7 +20,9 @@ type ProfileModalProps = {
 const ProfileModal: React.FC<ProfileModalProps> = ({ open, onClose, user }) => {
   if (!user) return null;
 
-  const userEntries = Object.entries(user);
+  const _user = { ...user };
+  delete _user.password;
+  const userEntries = Object.entries(_user);
   const display = open ? "initial" : "none";
   return (
     <Box

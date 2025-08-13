@@ -4,7 +4,7 @@ import TopNav from "./TopNav";
 import { Box } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import ProfileModal from "./ProfileModal";
+import ProfileModal from "../shared/ProfileModal";
 
 const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const DashboardLayout: React.FC = () => {
     logout();
   };
 
-  const handleNavigate = (tab: "users" | "tasks" | "any-url") => {
+  const handleNavigate = (tab: string) => {
     navigate(`/dashboard/${tab}`);
   };
 

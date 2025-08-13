@@ -1,8 +1,14 @@
 /// <reference types="vite/client" />
 import axios from "axios";
 
+const isHttps = window.location.protocol === "https:";
+
+const baseURL = isHttps
+  ? import.meta.env.VITE_BASE_API_HTTPS_URL || "https://localhost:5001/api"
+  : import.meta.env.VITE_BASE_API_HTTP_URL || "http://localhost:7077/api";
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API_URL || "https://localhost:7077/api", 
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },

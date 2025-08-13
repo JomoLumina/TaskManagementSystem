@@ -45,10 +45,6 @@ namespace TaskManagementSystem.API.Services
         {
             var t = await _db.Tasks.FindAsync(id) ?? throw new ApplicationException("Task not found");
 
-            // enforce allowed status transitions: TODO -> IN_PROGRESS -> DONE
-            if (!IsValidTransition(t.Status, req.Status))
-                throw new ApplicationException($"Invalid status transition from {t.Status} to {req.Status}");
-
             t.Title = req.Title;
             t.Description = req.Description;
             t.Status = req.Status;
@@ -65,13 +61,6 @@ namespace TaskManagementSystem.API.Services
             var t = await _db.Tasks.FindAsync(id) ?? throw new ApplicationException("Task not found");
             _db.Tasks.Remove(t);
             await _db.SaveChangesAsync();
-        }
-
-        private bool IsValidTransition(Models.TaskStatus from, Models.TaskStatus to)
-        {
-            if (from == to) return true;
-            return (from == Models.TaskStatus.TODO && to == Models.TaskStatus.IN_PROGRESS)
-                || (from == Models.TaskStatus.IN_PROGRESS && to == Models.TaskStatus.DONE);
         }
     }
 }

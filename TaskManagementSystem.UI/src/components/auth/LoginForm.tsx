@@ -53,9 +53,9 @@ const LoginForm: React.FC = () => {
         const { token, user } = response.data;
         auth.login(token, user);
         navigate("/");
-      }else if(response.status === 401){
+      } else if (response.status === 401) {
         throw new Error("Invalid login credentials");
-      }else{
+      } else {
         throw new Error("Login failed, please try again.");
       }
     } catch (error: any) {
@@ -104,7 +104,7 @@ const LoginForm: React.FC = () => {
         <Button
           type="submit"
           variant="contained"
-          color="primary"
+          color="secondary"
           fullWidth
           sx={{ py: 1, borderRadius: 2 }}
           disabled={loading}
@@ -114,7 +114,7 @@ const LoginForm: React.FC = () => {
         <Divider className="divider" sx={{ mt: 1 }} />
         <Typography textAlign="center">
           Don't have an account?{" "}
-          <Link component={RouterLink} to="/register" underline="hover">
+          <Link component={RouterLink} to="/register" underline="hover" color="secondary">
             Register here
           </Link>
         </Typography>

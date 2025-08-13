@@ -109,8 +109,8 @@ You can update environment variables in the following files:
 - **Frontend:** `/TaskManagementSystem.UI/.env`  
   Example:
   ```env
-  VITE_API_BASE_URL=https://localhost:7077/api
-
+  VITE_BASE_API_HTTP_URL=http://localhost:5100/api
+  VITE_BASE_API_HTTPS_URL=https://localhost:7077/api
 ---
 
 ## ⚡ Quick Start (Run Both Frontend & Backend Together)
