@@ -151,7 +151,7 @@ export default function AddTaskModal({
               type="submit"
               disabled={loading}
             >
-              {loading ? <CircularProgress size={24} /> : "Add Task"}
+              {loading ? <CircularProgress size={24} color="secondary"/> : "Add Task"}
             </Button>
           </DialogActions>
         </Box>

@@ -26,7 +26,7 @@ const PasswordField: React.FC<{
       error={error}
       helperText={helperText}
       fullWidth
-      className="white-text-field"
+      color="secondary"
       disabled={disabled}
       InputProps={{
         endAdornment: (

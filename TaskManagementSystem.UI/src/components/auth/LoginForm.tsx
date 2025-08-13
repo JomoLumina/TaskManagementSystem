@@ -88,11 +88,10 @@ const LoginForm: React.FC = () => {
         <TextField
           label="Username"
           {...register("username")}
-          color="primary"
+          color="secondary"
           error={!!errors.username}
           helperText={errors.username?.message}
           fullWidth
-          className="white-text-field"
           disabled={loading}
         />
         <PasswordField
@@ -109,7 +108,7 @@ const LoginForm: React.FC = () => {
           sx={{ py: 1, borderRadius: 2 }}
           disabled={loading}
         >
-          {loading ? <CircularProgress size={24} /> : "Login"}
+          {loading ? <CircularProgress size={24}  color="secondary" /> : "Login"}
         </Button>
         <Divider className="divider" sx={{ mt: 1 }} />
         <Typography textAlign="center">

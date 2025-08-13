@@ -20,11 +20,10 @@
     border-radius: 16px;
     box-shadow: 0 1px 3px rgba(200, 200, 200, 0.5);
     position: relative;
-    background: rgba(60, 60, 60, 0.2);
-    color: white;
+    background: rgba(230, 230, 230, 0.75);
 
     .divider {
-      background-color: rgba(200, 200, 200, 0.4);
+      background-color: rgba(80, 80, 80, 0.4);
       padding: 1px;
       border-radius: 8px;
     }
@@ -35,9 +34,4 @@
     }
   }
 
-}
-
-.registration-container {
-  background: url("../assets/images/background-2.jpg") no-repeat center center;
-  background-size: cover;
 }

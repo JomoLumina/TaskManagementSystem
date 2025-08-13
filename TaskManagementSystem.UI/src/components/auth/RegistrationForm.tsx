@@ -109,7 +109,7 @@ const RegistrationForm: React.FC = () => {
           error={!!errors.username}
           helperText={errors.username?.message}
           fullWidth
-          className="white-text-field"
+          color="secondary"
           disabled={loading}
         />
 
@@ -120,7 +120,7 @@ const RegistrationForm: React.FC = () => {
           error={!!errors.email}
           helperText={errors.email?.message}
           fullWidth
-          className="white-text-field"
+          color="secondary"
           disabled={loading}
         />
 
@@ -148,7 +148,7 @@ const RegistrationForm: React.FC = () => {
           className="white-text-field"
           disabled={loading}
         >
-          {loading ? <CircularProgress size={24} /> : "Register"}
+          {loading ? <CircularProgress size={24} color="secondary" /> : "Register"}
         </Button>
         <Divider className="divider" />
         <Typography textAlign="center">

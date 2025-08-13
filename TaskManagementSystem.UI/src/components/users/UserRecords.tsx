@@ -118,7 +118,7 @@ const UserRecords: React.FC = () => {
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
-                      color="primary"
+                      color="secondary"
                       onClick={() => handleOpen(user)}
                       aria-label="view"
                     >

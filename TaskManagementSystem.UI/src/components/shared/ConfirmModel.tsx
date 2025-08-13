@@ -30,7 +30,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         <Typography>{question}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCancel} variant="outlined">
+        <Button onClick={onCancel} color="secondary" variant="outlined">
           Cancel
         </Button>
         <Button onClick={onConfirm} color="error" variant="contained">

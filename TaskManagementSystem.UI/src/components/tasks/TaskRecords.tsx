@@ -164,7 +164,7 @@ const TaskRecords: React.FC = () => {
                   </TableCell>
                   <TableCell align="center">
                     <IconButton
-                      color="primary"
+                      color="secondary"
                       onClick={() => handleViewModalOpen(task)}
                       aria-label="view"
                     >

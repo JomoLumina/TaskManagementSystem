@@ -216,16 +216,16 @@ const UpdateTaskModal: React.FC<UpdateTaskModalProps> = ({
           )}
 
           <DialogActions>
-            <Button onClick={onClose} color="warning" disabled={loading}>
+            <Button onClick={onClose} color="secondary" disabled={loading}>
               Cancel
             </Button>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               type="submit"
               disabled={loading}
             >
-              {loading ? <CircularProgress size={24} /> : "Update Task"}
+              {loading ? <CircularProgress size={24} color="secondary" /> : "Update Task"}
             </Button>
           </DialogActions>
         </Box>
